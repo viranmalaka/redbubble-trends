@@ -33,15 +33,15 @@
 <body>
   <div class="left">
     {{#data}}
-      <div id="row-${index}" style="padding: 5px">
+      <div id="row-{{index}}" style="padding: 5px">
         <h2>
-          <input type="checkbox" onchange="javascript:check({{@index}})"> {{count}}: {{key}}
+          <input type="checkbox" onchange="javascript:check({{index}})"> {{count}}: {{key}}
         </h2>
         <a href="javascript:showGoogleTrends('{{key}}')">Google</a>
         <a target="_blank" href="https://www.redbubble.com/shop/?query={{key}}&ref=search_box">Redbubble</a>
 
         <div class="graph">
-          
+          {{previous}}
         </div>
       </div>
     {{/data}}
