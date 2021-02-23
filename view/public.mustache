@@ -1,0 +1,99 @@
+<html>
+<head>
+  <style>
+  iframe {
+    height: 427px;
+  }
+  
+  body {
+    display: flex;
+  }
+  .right {
+    flex-grow: 1;
+    width: 70%;
+  }
+  .left {
+    flex-grow: 1;
+    width: 30%;
+    max-height: 98vh;
+    overflow: auto;
+  }
+  .selected-row {
+    background-color: rgb(136, 248, 114);
+  }
+
+  .graph {
+    display: inline;
+  }
+    
+  </style>
+  <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2431_RC04/embed_loader.js"></script>
+  
+</head>
+<body>
+  <div class="left">
+    {{#data}}
+      <div id="row-${index}" style="padding: 5px">
+        <h2>
+          <input type="checkbox" onchange="javascript:check({{@index}})"> {{count}}: {{key}}
+        </h2>
+        <a href="javascript:showGoogleTrends('{{key}}')">Google</a>
+        <a target="_blank" href="https://www.redbubble.com/shop/?query={{key}}&ref=search_box">Redbubble</a>
+
+        <div class="graph">
+          
+        </div>
+      </div>
+    {{/data}}
+  </div>
+  <div class="right" id="test">
+  <div id="gt"></div>
+
+  <iframe id="google-search" src="" frameborder="0" style="width: 100%; height: 50vh"></iframe>
+</div>   
+</body>
+<script>
+
+  function save() {
+    const rows = document.getElementsByClassName('selected-row');
+    const obj = {};
+
+    for (const iterator of rows) {
+      obj[iterator.id] = 1;
+    }
+
+    localStorage.setItem('selectedRows', JSON.stringify(obj));
+  }
+
+  function showGoogleTrends (e) {
+    const x = document.getElementById('gt');
+    x.innerHTML = '';
+    trends.embed.renderExploreWidgetTo(x, "TIMESERIES", {"comparisonItem":[{"keyword":e,"geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q=" + e + "&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"});    
+
+    const ifram = document.getElementById('google-search');
+    ifram.setAttribute('src', 'https://www.google.com/search?igu=1&q='+e)
+  }
+
+  function check (e) {
+    const row = document.getElementById('row-' + e);
+    const checkbox = row.getElementsByTagName('input')[0];
+    if (checkbox.checked) {
+      row.setAttribute('class', 'selected-row');
+    } else {
+      row.setAttribute('class', '');
+    }
+    save();
+  }
+
+  window.onload = () => {
+    const x = JSON.parse(localStorage.getItem('selectedRows') || '{}') || {};
+  
+    Object.keys(x).forEach(key => {
+      const row = document.getElementById(key);
+      row.setAttribute('class', 'selected-row');
+      row.getElementsByTagName('input')[0].checked = true;
+    });
+  };
+
+</script>
+</html>

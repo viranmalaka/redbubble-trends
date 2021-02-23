@@ -1,0 +1,19 @@
+{
+  "name": "Redbubble Trend",
+  "version": "0.0.1.0",
+  "description": "Find Trendings on Redbubble",
+  "manifest_version": 2,
+  "permissions": ["downloads", "activeTab", "declarativeContent", "storage"],
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "icon.png"
+    }
+  },
+  "background": {
+    "scripts": ["jquery.js", "background.js"],
+    "persistent": false
+  },
+  "icons": { 
+   "128": "icon.png" }
+}
