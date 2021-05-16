@@ -35,7 +35,7 @@ var RedResults = mongoose.model("results", schema, "redbubble-data");
 app.get('/', (req, res, next) => {
   RedResults.find({}, 'date', (err, data) => {
     if(!err) {
-      res.render('queries', {dates: data});
+      
     } else {
       res.status(400).json({ error: true, err});
     }
@@ -66,7 +66,7 @@ app.get('/trends/:date', (req, res, next) => {
         });
       a.sort((a, b) => a.count - b.count);
       
-      res.render('public', {data: a.map((x, index) => ({...x, index}))});
+      res.json({data: a.map((x, index) => ({...x, index}))});
     } else {
       console.log(err);
       res.status(400).json({ error: true, err});

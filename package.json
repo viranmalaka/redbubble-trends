@@ -11,7 +11,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.11.17",
-    "mustache-express": "^1.3.0"
+    "mongoose": "^5.11.17"
+  },
+  "devDependencies": {
+    "cypress": "^7.3.0"
   }
 }
