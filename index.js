@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const mustacheExpress = require('mustache-express');
 const cors = require('cors');
+require('dotenv').config();
 
 const twoDigi = (a) => (a < 10) ? '0' + a : a;
 const getDate = (ms) => {
@@ -13,10 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
-
-app.set('views', `${__dirname}/view`);
-app.set('view engine', 'mustache');
-app.engine('mustache', mustacheExpress());
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.DB_URL, {
@@ -35,7 +31,7 @@ var RedResults = mongoose.model("results", schema, "redbubble-data");
 app.get('/', (req, res, next) => {
   RedResults.find({}, 'date', (err, data) => {
     if(!err) {
-      
+      res.send('developing');
     } else {
       res.status(400).json({ error: true, err});
     }
@@ -47,7 +43,7 @@ app.get('/trends/:date', (req, res, next) => {
     if(!err) {
       const values = data.filter(x => x.date === req.params.date)[0].data;
       
-      const previousDays = Array(4).fill({}).map((_, index) => {
+      const previousDays = Array(10).fill({}).map((_, index) => {
         return getDate(new Date(req.params.date).getTime() - (86400000 * (index + 1)))
       });
       const previousDaysData = data.filter(x => previousDays.includes(x.date)).reduce((obj, current) => {
