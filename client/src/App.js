@@ -44,10 +44,10 @@ function App(props) {
     (async () => {
       setLoading(true);
       try {
-        const data = await axios.get('http://redbubble-trends.herokuapp.com/trends/' + (selectedDate || getDate(Date.now())));
+        const data = await axios.get('https://redbubble-trends.herokuapp.com/trends/' + (selectedDate || getDate(Date.now())));
         setResult(data.data.data);
         if (!dates.length) {
-          const dates = await axios.get('http://redbubble-trends.herokuapp.com/dates');
+          const dates = await axios.get('https://redbubble-trends.herokuapp.com/dates');
           // const dates = await axios.get('http://localhost:4000/dates');
           const r = dates.data.map(x => x.date);
           r.reverse();
