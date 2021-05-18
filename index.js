@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const twoDigi = (a) => (a < 10) ? '0' + a : a;
@@ -20,6 +21,7 @@ mongoose.connect(process.env.DB_URL, {
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
+app.use(express.static(path.join(__dirname, 'public')));
 
 var schema = mongoose.Schema({
   date: {type: String, unique: true},
