@@ -27,11 +27,10 @@ var schema = mongoose.Schema({
 });
 var RedResults = mongoose.model("results", schema, "redbubble-data");
 
-
-app.get('/', (req, res, next) => {
+app.get('/dates', (req, res, next) => {
   RedResults.find({}, 'date', (err, data) => {
     if(!err) {
-      res.send('developing');
+      res.send(data);
     } else {
       res.status(400).json({ error: true, err});
     }
@@ -42,7 +41,7 @@ app.get('/trends/:date', (req, res, next) => {
   RedResults.find({}, (err, data) => {
     if(!err) {
       const values = data.filter(x => x.date === req.params.date)[0].data;
-      
+
       const previousDays = Array(10).fill({}).map((_, index) => {
         return getDate(new Date(req.params.date).getTime() - (86400000 * (index + 1)))
       });
@@ -54,14 +53,14 @@ app.get('/trends/:date', (req, res, next) => {
       const a = Object.keys(values)
         .filter(key => values[key] !== 'error')
         .map(key => {
-          return { 
-            key, 
+          return {
+            key,
             count: values[key],
             previous: Object.keys(previousDaysData).map(day => previousDaysData[day] && previousDaysData[day][key]),
           };
         });
       a.sort((a, b) => a.count - b.count);
-      
+
       res.json({data: a.map((x, index) => ({...x, index}))});
     } else {
       console.log(err);

@@ -1,0 +1,50 @@
+.App-header {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+}
+
+.header {
+  color: white;
+  font-size: 30px;
+}
+
+.row-container {
+  border-bottom: 1px solid gray;
+  cursor: pointer;
+}
+
+.row-container.selected {
+  background-color: aqua;
+}
+
+.row-container.checked {
+  background-color: #b9ffff;
+}
+
+.row-container.selected.checked {
+  background-color: #00bebe;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row .name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+
+  padding: 12px 5px;
+  line-height: 46px;
+  font-size: 17px;
+}
+
+.row .number {
+  padding: 13px 5px;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 43px;
+}
