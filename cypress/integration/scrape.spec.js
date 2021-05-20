@@ -5,7 +5,7 @@ const getDate = (ms) => {
 }
 
 const PR_TERMS = 9;
-const PR_GQL = 5;
+const PR_GQL = 9;
 
 describe('test', () => {
 
@@ -46,7 +46,7 @@ describe('test', () => {
           result.forEach((response, j) => {
             searchKeys[searchKeysArray[i + j]] = response.data.searchResults.metadata.resultCount;
           });
-          if (i % (PR_GQL * 3) === 0) {
+          if (i % (PR_GQL * 20) === 0) {
             cy.request('POST', `https://redbubble-trends.herokuapp.com/results/${getDate(Date.now())}`, searchKeys).then(() => {
               cy.task('log', 'updated...');
             });
