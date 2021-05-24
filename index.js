@@ -42,28 +42,33 @@ app.get('/dates', (req, res, next) => {
 app.get('/trends/:date', (req, res, next) => {
   RedResults.find({}, (err, data) => {
     if(!err) {
-      const values = data.filter(x => x.date === req.params.date)[0].data;
+      try {
+        const values = data.filter(x => x.date === req.params.date)[0].data;
 
-      const previousDays = Array(10).fill({}).map((_, index) => {
-        return getDate(new Date(req.params.date).getTime() - (86400000 * (index + 1)))
-      });
-      const previousDaysData = data.filter(x => previousDays.includes(x.date)).reduce((obj, current) => {
-        obj[current.date] = current.data
-        return obj;
-      }, {});
-
-      const a = Object.keys(values)
-        .filter(key => values[key] !== 'error')
-        .map(key => {
-          return {
-            key,
-            count: values[key],
-            previous: Object.keys(previousDaysData).map(day => previousDaysData[day] && previousDaysData[day][key]),
-          };
+        const previousDays = Array(10).fill({}).map((_, index) => {
+          return getDate(new Date(req.params.date).getTime() - (86400000 * (index + 1)))
         });
-      a.sort((a, b) => a.count - b.count);
+        const previousDaysData = data.filter(x => previousDays.includes(x.date)).reduce((obj, current) => {
+          obj[current.date] = current.data
+          return obj;
+        }, {});
 
-      res.json({data: a.map((x, index) => ({...x, index}))});
+        const a = Object.keys(values)
+          .filter(key => values[key] !== 'error')
+          .map(key => {
+            return {
+              key,
+              count: values[key],
+              previous: Object.keys(previousDaysData).map(day => previousDaysData[day] && previousDaysData[day][key]),
+            };
+          });
+        a.sort((a, b) => a.count - b.count);
+
+        res.json({data: a.map((x, index) => ({...x, index}))});
+      } catch (e) {
+        console.log(err);
+        res.status(400).json({ error: true, err: e});
+      }
     } else {
       console.log(err);
       res.status(400).json({ error: true, err});
