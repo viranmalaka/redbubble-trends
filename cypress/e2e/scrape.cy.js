@@ -12,7 +12,9 @@ describe('test', () => {
   const metadata = {};
 
   it('scrape', () => {
-    cy.visit('https://www.redbubble.com/');
+    cy.visit('https://www.redbubble.com/', {timeout: 600000, onBeforeLoad(win) {
+        console.log('here on beforeload');
+      }});
 
     const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
     // const letters = 'ab'.split('');
@@ -30,7 +32,7 @@ describe('test', () => {
             })
           });
           cy.task('log', `[Params] from ${len} finished ${i + PR_TERMS}`);
-          cy.wait(50);
+          cy.wait(400);
           getSearchKeys(i + PR_TERMS, len, cb);
         });
       } else {
@@ -46,18 +48,18 @@ describe('test', () => {
           result.forEach((response, j) => {
             searchKeys[searchKeysArray[i + j]] = response.data.searchResults.metadata.resultCount;
           });
-          if (i % (PR_GQL * 20) === 0) {
+          if (i % (PR_GQL * 5) === 0) {
             cy.request('POST', `https://redbubble-trends.herokuapp.com/results/${getDate(Date.now())}`, searchKeys).then(() => {
               cy.task('log', 'updated...');
             });
           }
+          cy.wait(400);
           getGQLResults(i+PR_GQL, len, cb);
         })
       } else {
         cb();
       }
     }
-
 
     cy.request(`https://redbubble-trends.herokuapp.com/results?date=${getDate(Date.now())}`).then(function(response) {
 
@@ -70,19 +72,19 @@ describe('test', () => {
         });
       }
 
-      // if(response && response.body.length) {
-      //   searchKeys = response.body[0].data;
-      //   searchKeysArray = Object.keys(searchKeys).filter(x => searchKeys[x] === 'not-set');
-      //   cy.task('log', `already saved on DB: ${searchKeysArray.length}`)
-      //   fn();
-      // } else {
+      if(response && response.body.length) {
+        searchKeys = response.body[0].data;
+        searchKeysArray = Object.keys(searchKeys).filter(x => searchKeys[x] === 'not-set');
+        cy.task('log', `already saved on DB: ${searchKeysArray.length}`)
+        fn();
+      } else {
         getSearchKeys(0, combines.length, () => {
           searchKeysArray = Object.keys(searchKeys);
           cy.task('log', `total keys found: ${searchKeysArray.length}`)
           cy.task('log', 'finished query');
           fn();
         });
-      // }
+      }
     })
   });
 });

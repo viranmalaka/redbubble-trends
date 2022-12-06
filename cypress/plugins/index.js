@@ -18,6 +18,7 @@
 // eslint-disable-next-line no-unused-vars
 
 const axios = require('axios');
+const PromiseRetry = require('promise-retry');
 
 const getPayload = (key) => ({
   "operationName": "withSearchResults",
@@ -74,6 +75,10 @@ const getPayload = (key) => ({
   }`
 });
 
+const PROptions = {
+  
+};
+
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
@@ -85,7 +90,7 @@ module.exports = (on, config) => {
     },
     getTrendingSearch (letters) {
       return new Promise(((resolve, reject) => {
-        const promises = letters.map(l => axios.get(`https://www.redbubble.com/typeahead/?term=${l}&locale=en`));
+        const promises = letters.map(l => PromiseRetry((retry) => axios.get(`https://www.redbubble.com/typeahead/?term=${l}&locale=en`).catch(retry)));
         Promise.all(promises).then(result => {
           resolve(result.map(x => x.data));
         });
@@ -93,7 +98,7 @@ module.exports = (on, config) => {
     },
     getResultsCount (keywords) {
       return new Promise(((resolve, reject) => {
-        const promises = keywords.map(k => axios.post("https://www.redbubble.com/boom/graphql", getPayload(k)));
+        const promises = keywords.map(k => PromiseRetry((retry) => axios.post("https://www.redbubble.com/boom/graphql", getPayload(k)).catch(retry)));
         Promise.all(promises).then(result => {
           resolve(result.map(response => response.data));
         });

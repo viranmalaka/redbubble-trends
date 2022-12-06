@@ -13,9 +13,10 @@
     "cors": "^2.8.5",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
-    "mongoose": "^5.11.17"
+    "mongoose": "^5.11.17",
+    "promise-retry": "^2.0.1"
   },
   "devDependencies": {
-    "cypress": "^7.3.0"
+    "cypress": "^10.3.0"
   }
 }
