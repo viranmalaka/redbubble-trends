@@ -45,13 +45,13 @@ function App() {
       setLoading(true);
       try {
         const data = await axios.get(
-          "https://redbubble-trends.herokuapp.com/trends/" +
+          "https://redbubble-trends.onrender.com/trends/" +
             (selectedDate || getDate(Date.now()))
         );
         setResult(data.data.data);
         if (!dates.length) {
           const dates = await axios.get(
-            "https://redbubble-trends.herokuapp.com/dates"
+            "https://redbubble-trends.onrender.com/dates"
           );
           // const dates = await axios.get('http://localhost:4000/dates');
           const r = dates.data.map((x) => x.date);
@@ -183,7 +183,6 @@ function App() {
 }
 
 export default App;
-
 
 //https://app.insightfactory.app/redbubble/data/popular?_=1634694977346
 // https://redbubble.dabu.ro/redbubble-popular-tags
