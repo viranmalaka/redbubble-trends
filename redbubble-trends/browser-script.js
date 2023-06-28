@@ -1,7 +1,7 @@
 (async () => {
   const PR_TERMS = 9;
   const PR_GQL = 9;
-  const HOSTED_URL = "https://redbubble-trends.onrender.com";
+  const HOSTED_URL = "https://redbubble-trends.vercel.app/api";
 
   // UTILS
   const twoDigi = (a) => (a < 10 ? "0" + a : a);
