@@ -49,7 +49,7 @@
 
   // END UTILS
 
-  const letters = "abcdefghijklmnopqrstuvwxyz".split("");
+  const letters = "abcd".split("");
 
   const combines = letters.reduce(
     (x, y) => [...x, ...letters.map((b) => b + y)],
@@ -74,24 +74,21 @@
   };
 
   const saveKeywords = (searchKeys) => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "*/*");
-    myHeaders.append("content-type", "application/x-www-form-urlencoded");
-
-    const urlencoded = new URLSearchParams(searchKeys);
-
     const requestOptions = {
       method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(searchKeys),
       redirect: "follow",
     };
 
-    return fetch(`${HOSTED_URL}/results/${getDate()}`, requestOptions).then(
-      () => {
-        console.log("Updating... and Finished Job");
-      }
-    );
+    return fetch(
+      `${HOSTED_URL}/results?date=${getDate()}`,
+      requestOptions
+    ).then(() => {
+      console.log("Updating... and Finished Job");
+    });
   };
 
   const getGQLResults = async (i, len, cb) => {

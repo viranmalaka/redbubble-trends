@@ -13,3 +13,20 @@ export async function GET(req) {
     return new NextResponse({ status: 400 }).json({ err, error: true });
   }
 }
+
+export async function POST(req) {
+  await createDBConnection();
+  const { searchParams } = new URL(req.url);
+  const date = searchParams.get("date");
+
+  try {
+    const data = await RedResults.findOneAndUpdate(
+      { date },
+      { data: await req.json(), date },
+      { upsert: true, setDefaultsOnInsert: true }
+    );
+    return NextResponse.json(data);
+  } catch (err) {
+    return new NextResponse({ status: 400 }).json({ err, error: true });
+  }
+}
