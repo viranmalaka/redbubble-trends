@@ -61,7 +61,7 @@ function App() {
       }
       setLoading(false);
     })();
-  }, [selectedDate]);
+  }, [selectedDate, dates.length]);
 
   useEffect(() => {
     const gt = document.getElementById("gt");
