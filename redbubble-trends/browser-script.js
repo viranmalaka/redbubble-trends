@@ -19,7 +19,6 @@
         accept: "*/*",
       },
       method: "GET",
-      mode: "cors",
     };
     const res = await fetch(url, obj);
     return res.json();
