@@ -1,0 +1,17 @@
+{
+  "name": "Drink Water Event Popup",
+  "description": "Demonstrates usage and features of the event page by reminding user to drink water",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["alarms", "notifications", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "48": "drink_water48.png"
+  },
+  "host_permissions": [
+    "https://www.redbubble.com/*",
+    "https://redbubble-trends.onrender.com/*"
+  ]
+}

@@ -18,6 +18,10 @@ describe("test", () => {
       onBeforeLoad(win) {
         console.log("here on beforeload");
       },
+      headers: {
+        accept: "application/json, text/plain, */*",
+        "user-agent": "axios/0.27.2",
+      },
     });
 
     const letters = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -87,7 +91,7 @@ describe("test", () => {
         getGQLResults(0, searchKeysArray.length, () => {
           cy.request(
             "POST",
-            `https://redbubble-trends.herokuapp.com/results/${getDate(
+            `https://redbubble-trends.onrender.com/results/${getDate(
               Date.now()
             )}`,
             searchKeys
