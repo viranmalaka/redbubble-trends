@@ -44,7 +44,14 @@
       method: "POST",
       mode: "cors",
       credentials: "include",
-    }).then((a) => a.json());
+    }).then((a) => {
+      if (a.status === 409) {
+        console.log(
+          "====== wait few minitus and rerun the script. Redbubble is not allowing anymore requests"
+        );
+      }
+      return a.json();
+    });
   };
 
   // END UTILS
@@ -140,8 +147,8 @@
   const existingData = await apiService({
     url: `${HOSTED_URL}/results?date=${getDate()}`,
   });
-  if (existingData && existingData.length) {
-    searchKeys = existingData[0].data;
+  if (existingData) {
+    searchKeys = existingData.data;
     searchKeysArray = Object.keys(searchKeys).filter(
       (x) => searchKeys[x] === "not-set"
     );
