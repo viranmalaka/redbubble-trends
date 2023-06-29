@@ -12,6 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <title>Redbubble Trends</title>
         <script
           async
           type="text/javascript"
