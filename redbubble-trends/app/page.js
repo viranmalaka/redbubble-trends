@@ -7,6 +7,7 @@ import { Layout, Col, Row, message, Button } from "antd";
 import { getDate } from "../utils/utils";
 
 import ResultList from "../components/table";
+import ScrapeModal from "../components/screape-modal";
 import axios from "axios";
 
 const { Header, Content } = Layout;
@@ -144,6 +145,8 @@ function App() {
                       >
                         Visit redbubble
                       </Button>
+                      <ScrapeModal />
+
                       <span style={{ float: "right" }}>
                         {selected.previous.filter((a) => !!a).join("-")}
                       </span>

@@ -28,7 +28,6 @@ export async function GET(request, { params }) {
       return pre;
     }, {});
 
-    console.log(data);
     const result = Object.keys(data.data)
       .filter((key) => data.data[key] !== "error")
       .map((key) => {
