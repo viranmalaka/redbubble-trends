@@ -13,6 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <script
+          async
           type="text/javascript"
           src="https://ssl.gstatic.com/trends_nrtr/2578_RC01/embed_loader.js"
         ></script>
