@@ -49,7 +49,7 @@
 
   // END UTILS
 
-  const letters = "abcd".split("");
+  const letters = "abcdefghijklmnopqrstuvwxyz".split("");
 
   const combines = letters.reduce(
     (x, y) => [...x, ...letters.map((b) => b + y)],

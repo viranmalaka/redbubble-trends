@@ -8,7 +8,7 @@ export async function GET(req) {
   await createDBConnection();
   try {
     const data = await RedResults.find({ date });
-    return NextResponse.json(data);
+    return NextResponse.json(data[0]);
   } catch (err) {
     return new NextResponse({ status: 400 }).json({ err, error: true });
   }
