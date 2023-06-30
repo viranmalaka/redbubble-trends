@@ -147,7 +147,7 @@
   const existingData = await apiService({
     url: `${HOSTED_URL}/results?date=${getDate()}`,
   });
-  if (existingData) {
+  if (existingData && existingData.data) {
     searchKeys = existingData.data;
     searchKeysArray = Object.keys(searchKeys).filter(
       (x) => searchKeys[x] === "not-set"
