@@ -111,6 +111,7 @@ function App() {
         <Layout>
           <Header style={{ display: "flex", justifyContent: "space-between" }}>
             <h1 className="header">Redbubble Trends</h1>
+            <ScrapeModal />
           </Header>
           <Content>
             <Row style={{ height: "100%" }}>
@@ -145,7 +146,6 @@ function App() {
                       >
                         Visit redbubble
                       </Button>
-                      <ScrapeModal />
 
                       <span style={{ float: "right" }}>
                         {selected.previous.filter((a) => !!a).join("-")}
