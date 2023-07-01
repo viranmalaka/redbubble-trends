@@ -29,7 +29,9 @@ function ScrapeModal() {
           // Copy the text inside the text field
           navigator.clipboard.writeText(content);
           setVisible(false);
-          window.open("https://redbubble.com", "_blank");
+          setTimeout(() => {
+            window.open("https://redbubble.com", "_blank");
+          }, 1000);
         }}
       >
         <div style={{ height: 600, overflow: "auto" }}>
